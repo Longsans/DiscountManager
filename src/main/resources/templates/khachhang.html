@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Khách hàng</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+</head>
+<body>
+<p style="font-size: 200%; font-weight: bold">Danh sách khách hàng:</p>
+<table>
+  <tr>
+    <th scope="col"> ID </th>
+    <th scope="col"> Tên </th>
+    <th scope="col"> Email </th>
+    <th scope="col"> Điểm Khuyến Mãi </th>
+  </tr>
+  <tr th:if="${dsKhachHang.empty}">
+    <td colspan="4"> Chưa có khách hàng nào </td>
+  </tr>
+  <tr th:each="khachhang : ${dsKhachHang}">
+    <td><span th:text="${khachhang.getId()}"> ID </span></td>
+    <td><span th:text="${khachhang.getTen()}"> Tên </span></td>
+    <td><span th:text="${khachhang.getEmail()}"> Email </span></td>
+    <td><span th:text="${khachhang.getDiemKhuyenMai()}"> Điểm Khuyến Mãi </span></td>
+  </tr>
+</table>
+</body>
+</html>
