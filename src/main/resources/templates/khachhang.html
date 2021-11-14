@@ -19,7 +19,7 @@
     <th scope="col"> Điểm Khuyến Mãi </th>
   </tr>
   <tr th:if="${dsKhachHang.empty}">
-    <td colspan="4"> Chưa có khách hàng nào </td>
+    <td colspan="4"> Không tìm thấy khách hàng nào </td>
   </tr>
   <tr th:each="khachhang : ${dsKhachHang}">
     <td><span th:text="${khachhang.getId()}"> ID </span></td>

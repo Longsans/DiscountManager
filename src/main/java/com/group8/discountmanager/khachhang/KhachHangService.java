@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class KhachHangService {
@@ -29,13 +28,14 @@ public class KhachHangService {
     @Transactional(isolation = Isolation.REPEATABLE_READ,
             propagation = Propagation.REQUIRED,
             readOnly = true)
-    public Optional<KhachHang> getById(Long id) {
-        return khachHangRepo.findById(id);
+    public KhachHang getById(Long id) {
+        var khachHangOpt = khachHangRepo.findById(id);
+        return khachHangOpt.orElse(null);
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE,
             propagation = Propagation.REQUIRED,
-            timeout = 15)
+            timeout = 10)
     public void insertKhachHang(KhachHang khachHang) {
         if (!khachHangRepo.existsById(khachHang.getId()))
             khachHangRepo.save(khachHang);
@@ -43,8 +43,9 @@ public class KhachHangService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE,
             propagation = Propagation.REQUIRED,
-            timeout = 15)
-    public void updateKhachHang(Long khachHangId, String ten, String email, Integer diemKM) {
+            timeout = 10)
+    public void updateKhachHang(Long khachHangId, String ten, String email, Integer diemKM) throws InterruptedException {
+        System.out.println("----------updateKhachHang starts...");
         var khachHangOpt = khachHangRepo.findById(khachHangId);
         if (khachHangOpt.isPresent()) {
             var khachHang = khachHangOpt.get();
@@ -53,12 +54,15 @@ public class KhachHangService {
             khachHang.setDiemKhuyenMai(diemKM);
             khachHangRepo.save(khachHang);
         }
+//        Thread.sleep(3000);
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE,
             propagation = Propagation.REQUIRED,
-            timeout = 15)
-    public void deleteKhachHang(KhachHang khachHang) {
+            timeout = 10)
+    public void deleteKhachHang(KhachHang khachHang) throws InterruptedException {
+        Thread.sleep(500);
+        System.out.println("----------deleteKhachHang starts...");
         khachHangRepo.delete(khachHang);
     }
 }
